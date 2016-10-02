@@ -1,1 +1,1 @@
-web: python map.py $PORT 
+web: gunicorn map:app --log-file - 
