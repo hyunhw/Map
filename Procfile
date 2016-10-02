@@ -1,1 +1,1 @@
-web: gunicorn map:app
+web: python map.py $PORT 
