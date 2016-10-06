@@ -16,6 +16,10 @@ def index():
   #return render_template('index.html', stations=stations, startlat=startlat, startlng=startlng)
   return render_template('home.html', stations=stations)
 
+@app.route('/about')
+def about():
+  return render_template('about.html')
+
 def get_jsonfeed():
   req = Request('https://www.rideindego.com/stations/json/', headers={'User-Agent': 'Mozilla/5.0'})
   data = urlopen(req).read().decode('utf-8')
