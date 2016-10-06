@@ -40,14 +40,14 @@
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/full.png'});
 
-          {% elif ab < 6 %}
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
-            
           {% elif ab == 0 %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
 
+          {% elif ab < 6 %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
+            
           {% elif ststatus != 'Active' %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/unavailable.png'});
