@@ -12,7 +12,7 @@
   font-family: "open-sans"
 }
 html,body {
-  background-color: #e6e6e6;
+  background-color: #c0c0c0;
   height: 100%;
   margin: 0;
 }
@@ -30,7 +30,7 @@ html,body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: #375e97;
 }
 
 /* Float the list items side by side */
@@ -48,5 +48,9 @@ html,body {
 }
 
 /* Change background color of links on hover */
-.topnav li a:hover {background-color: #555;}
+.topnav li a:hover {background-color: #3f681c;}
 
+.main-panel {
+  padding-left: 50px;
+  text-align: center;
+}

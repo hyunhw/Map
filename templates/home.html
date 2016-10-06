@@ -14,7 +14,15 @@
       <li><a href="#about">About</a></li>
     </ul>
 
-    <p>Welcome! This is an interactive map that shows bike share stops</p>
+    <div class = "main-panel">
+      <div class="panel-heading">
+        <h3 class = "title">Welcome!</h3>
+      </div>
+      <div class = "panel-body">
+        This is an interactive map that shows bike share stops and related information<br>
+        <img src="static/imgs/full.png" height=15px> full, <img src="static/imgs/almostfull.png" height=15px> almost full, <img src="static/imgs/almostempty.png" height=15px> almost empty, <img src="static/imgs/empty.png" height=15px> empty, <img src="static/imgs/unavailable.png" height=15px> unavailable
+      </div>
+    </div>
 
     <div id="map"></div>
     <script>
@@ -22,25 +30,29 @@
       var marker;
       function initMap(){
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 39.9526, lng: -75.1652},
+          center: {lat: 39.9552, lng: -75.1796},
           zoom: 13 
         });
-        {% for id , lat, lng, ad, td in stations %}
+        {% for id , lat, lng, ad, td, sttus in stations %}
           {% if ad == 0 %}
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
-
-          {% elif ad < 5 %}
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
-            
-          {% elif ad == td %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/full.png'});
 
-          {% else %}
+          {% elif ad < 5 %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostfull.png'});
+            
+          {% elif ad == td %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
+
+          {% elif sttus != 'Active' %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/unavailable.png'});
+
+          {% else %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
           {% endif %}
         {% endfor %}
 //        {% for id, lat, lng, ad, td in stations %}

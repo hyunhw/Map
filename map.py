@@ -20,8 +20,8 @@ def get_jsonfeed():
   req = Request('https://www.rideindego.com/stations/json/', headers={'User-Agent': 'Mozilla/5.0'})
   data = urlopen(req).read().decode('utf-8')
   feed = json.loads(data)
-
   return feed
+
 
 def get_stations(feed):
   nstations = len(feed['features'])
@@ -30,8 +30,9 @@ def get_stations(feed):
   lng = [feed['features'][i]['geometry']['coordinates'][0] for i in range(0,nstations)]
   ad = [feed['features'][i]['properties']['docksAvailable'] for i in range(0,nstations)]
   td = [feed['features'][i]['properties']['totalDocks'] for i in range(0,nstations)]
+  status = [feed['features'][i]['properties']['kioskPublicStatus'] for i in range(0,nstations)]
 
-  return zip(station_id, lat,lng,ad,td)
+  return zip(station_id, lat,lng,ad,td, status)
 
 """
 def get_jsonfeed():
