@@ -26,8 +26,22 @@
           zoom: 13 
         });
         {% for id , lat, lng, ad, td in stations %}
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng({{lat}},{{lng}}), map:map});
+          {% if ad == 0 %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
+
+          {% elif ad < 5 %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
+            
+          {% elif ad == td %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/full.png'});
+
+          {% else %}
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostfull.png'});
+          {% endif %}
         {% endfor %}
 //        {% for id, lat, lng, ad, td in stations %}
 //        marker = new google.maps.Marker({position:new google.maps.LatLng({{ lat }}, {{lng}},icon:'static/img/red.png',map: map});
