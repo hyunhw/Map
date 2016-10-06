@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
     <title>Bike Share</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <style>
-      html, body{
-        height:100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-    </style>
   </head>
+
   <body>
+    <!-- Navbar -->
+    <ul class="topnav" id="myTopnav">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+
+    <p>Welcome! This is an interactive map that shows bike share stops</p>
+
     <div id="map"></div>
     <script>
       var map;
@@ -40,5 +40,7 @@
       //{% endfor %}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0GRhX6aI30QOvCju-nHIUryIBQ3F8gpo&callback=initMap"async defer></script>
+
+
   </body>
 </html>
