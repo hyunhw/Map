@@ -54,7 +54,7 @@
 
           {% else %}
             marker = new google.maps.Marker({
-              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almost.png'});
+              position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostfull.png'});
           {% endif %}
 
           content = '<div class="info"><h3 id="dockname">{{stname}}</h3><p id="streetadd">{{st_add}}</p><table id="biketable"><tr id="fr"><th>{{ab}}</th><th>{{ad}}</th></tr><tr id="sr"><th>Bikes</th><th>Docks</th></tr></table></div>'
