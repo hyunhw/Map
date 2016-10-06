@@ -14,6 +14,7 @@
 html,body {
   background-color: #e6e6e6;
   height: 100%;
+  margin: 0;
 }
 #map{
   padding-top:30px;
