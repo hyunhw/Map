@@ -51,7 +51,8 @@ html,body {
 .topnav li a:hover {background-color: #3f681c;}
 
 .main-panel {
-  padding-left: 50px;
+  padding-left: auto;
+  padding-right: auto;
   text-align: center;
 }
 
