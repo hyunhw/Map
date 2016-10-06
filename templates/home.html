@@ -57,8 +57,7 @@
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
           {% endif %}
 
-          //content="<div ="infowindow"><h3 class="infomsg">{{stname}}<br></h3>{{st_add}}<br><ul><li class="infodat">{{avail}}{{td}}</li><br><li>Bikes Docks</li></ul></div>"
-          content = '<div class="info"><h3 id="dockname">{{stname}}</h3><p id="streetadd">{{st_add}}</p><ul id="bike"><li style="font-size:35px">{{ab}}  {{ad}}</li><br><li style="font-size:13px">Bikes   Docks</li></ul></div>'
+          content = '<div class="info"><h3 id="dockname">{{stname}}</h3><p id="streetadd">{{st_add}}</p><table id="biketable"><tr id="fr"><th>{{ab}}</th><th>{{ad}}</th></tr><tr id="sr"><th>Bikes</th><th>Docks</th></tr></table></div>'
           infowindow = new google.maps.InfoWindow()
           google.maps.event.addListener(marker,'click',
           (function(marker, content, infowindow){

@@ -64,10 +64,15 @@ html,body {
   margin:0;
   padding:0;
 }
-.info ul, .info li{
-  margin-top:10px;
-  padding-left:10px;
+#biketable{
+  margin-top:15px;
+  margin-left:10px;
+  text-align:center;
 }
-#bike li{
-  display:inline;
+#fr{
+  font-size:35px;
+}
+#sr{
+  font-size:15px;
+  font-weight: normal;
 }
