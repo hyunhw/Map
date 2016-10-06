@@ -54,3 +54,20 @@ html,body {
   padding-left: 50px;
   text-align: center;
 }
+
+#dockname{
+  margin:0;
+  padding:0;
+  color:orange;
+}
+#streetadd{
+  margin:0;
+  padding:0;
+}
+.info ul, .info li{
+  margin-top:10px;
+  padding-left:10px;
+}
+#bike li{
+  display:inline;
+}

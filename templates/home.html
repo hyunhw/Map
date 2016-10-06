@@ -35,7 +35,7 @@
           center: {lat: 39.9552, lng: -75.1796},
           zoom: 13 
         });
-        {% for id , lat, lng, ad, td, sttus, stadd, avail in stations %}
+        {% for id , lat, lng, ad, td, ststatus, stname, ab, st_add in stations %}
           {% if ad == 0 %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/full.png'});
@@ -48,7 +48,7 @@
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
 
-          {% elif sttus != 'Active' %}
+          {% elif ststatus != 'Active' %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/unavailable.png'});
 
@@ -57,7 +57,8 @@
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
           {% endif %}
 
-          content="{{stadd}}"
+          //content="<div ="infowindow"><h3 class="infomsg">{{stname}}<br></h3>{{st_add}}<br><ul><li class="infodat">{{avail}}{{td}}</li><br><li>Bikes Docks</li></ul></div>"
+          content = '<div class="info"><h3 id="dockname">{{stname}}</h3><p id="streetadd">{{st_add}}</p><ul id="bike"><li style="font-size:35px">{{ab}}  {{ad}}</li><br><li style="font-size:13px">Bikes   Docks</li></ul></div>'
           infowindow = new google.maps.InfoWindow()
           google.maps.event.addListener(marker,'click',
           (function(marker, content, infowindow){

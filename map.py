@@ -26,15 +26,17 @@ def get_jsonfeed():
 def get_stations(feed):
   nstations = len(feed['features'])
   station_id = [feed['features'][i]['properties']['kioskId'] for i in range(0,nstations)]
+  station_name = [feed['features'][i]['properties']['name'] for i in range(0,nstations)]
+  station_add = [feed['features'][i]['properties']['addressStreet'] for i in range(0,nstations)]
   lat = [feed['features'][i]['geometry']['coordinates'][1] for i in range(0,nstations)]
   lng = [feed['features'][i]['geometry']['coordinates'][0] for i in range(0,nstations)]
+  #ad - available docks, td - total docks, ab - available bikes
   ad = [feed['features'][i]['properties']['docksAvailable'] for i in range(0,nstations)]
   td = [feed['features'][i]['properties']['totalDocks'] for i in range(0,nstations)]
+  ab = [feed['features'][i]['properties']['bikesAvailable'] for i in range(0,nstations)]
   status = [feed['features'][i]['properties']['kioskPublicStatus'] for i in range(0,nstations)]
-  stadd = [feed['features'][i]['properties']['addressStreet'] for i in range(0,nstations)]
-  avail = [feed['features'][i]['properties']['bikesAvailable'] for i in range(0,nstations)]
 
-  return zip(station_id, lat,lng,ad,td, status, stadd, avail)
+  return zip(station_id, lat,lng,ad,td, status, station_name, ab, station_add)
 
 """
 def get_jsonfeed():
