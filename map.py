@@ -31,8 +31,10 @@ def get_stations(feed):
   ad = [feed['features'][i]['properties']['docksAvailable'] for i in range(0,nstations)]
   td = [feed['features'][i]['properties']['totalDocks'] for i in range(0,nstations)]
   status = [feed['features'][i]['properties']['kioskPublicStatus'] for i in range(0,nstations)]
+  stadd = [feed['features'][i]['properties']['addressStreet'] for i in range(0,nstations)]
+  avail = [feed['features'][i]['properties']['bikesAvailable'] for i in range(0,nstations)]
 
-  return zip(station_id, lat,lng,ad,td, status)
+  return zip(station_id, lat,lng,ad,td, status, stadd, avail)
 
 """
 def get_jsonfeed():

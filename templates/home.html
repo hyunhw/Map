@@ -28,12 +28,14 @@
     <script>
       var map;
       var marker;
+      var infowindow;
+      var infos = [];
       function initMap(){
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 39.9552, lng: -75.1796},
           zoom: 13 
         });
-        {% for id , lat, lng, ad, td, sttus in stations %}
+        {% for id , lat, lng, ad, td, sttus, stadd, avail in stations %}
           {% if ad == 0 %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/full.png'});
@@ -54,16 +56,33 @@
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
           {% endif %}
+
+          content="{{stadd}}"
+          infowindow = new google.maps.InfoWindow()
+          google.maps.event.addListener(marker,'click',
+          (function(marker, content, infowindow){
+            return function() {
+
+              /* close previous info-window */
+              closeInfos();
+              infowindow.setContent(content);
+              infowindow.open(map,marker);
+              infos[0] = infowindow;
+            };
+          })(marker,content,infowindow));
+
         {% endfor %}
-//        {% for id, lat, lng, ad, td in stations %}
-//        marker = new google.maps.Marker({position:new google.maps.LatLng({{ lat }}, {{lng}},icon:'static/img/red.png',map: map});
-//        {% endfor %}
       }
-      //{% for id, lat, lng, ad, td in stations %}
-      //var marker;
-      //marker = new google.maps.Marker({position:new google.maps.LatLng({{ lat }}, {{lng}},icon:'static/img/red.png'});
-      //marker.setMap(map);
-      //{% endfor %}
+
+      //to close previous infowindow
+      function closeInfos(){
+        if (infos.length>0){
+          infos[0].set("marker", null);
+          infos[0].close();
+          infos.length=0;
+        }
+      }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0GRhX6aI30QOvCju-nHIUryIBQ3F8gpo&callback=initMap"async defer></script>
 
