@@ -44,7 +44,7 @@
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/empty.png'});
 
-          {% elif ab < 6 %}
+          {% elif ab < ad %}
             marker = new google.maps.Marker({
               position: new google.maps.LatLng({{lat}},{{lng}}), map:map, icon:'static/imgs/almostempty.png'});
             
