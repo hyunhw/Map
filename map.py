@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import numpy as np
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -13,7 +14,6 @@ def index():
   stations = get_stations(feed)
   startlat=39.9526
   startlng=-75.1652
-  #return render_template('index.html', stations=stations, startlat=startlat, startlng=startlng)
   return render_template('home.html', stations=stations)
 
 @app.route('/about')
@@ -42,30 +42,6 @@ def get_stations(feed):
 
   return zip(station_id, lat,lng,ad,td, status, station_name, ab, station_add)
 
-"""
-def get_jsonfeed():
-  #urlData="https://api.phila.gov/bike-share-stations/v1"
-  urlData="http://www.citibikenyc.com/stations/json"
-  #req = urllib.request.Request("https://api.phila.gov/bike-share-stations/v1")
-  #opener = urllib.request.build_opener()
-  webUrl = urllib.request.urlopen(urlData)
-  data = webUrl.read()
-  encoding = webUrl.info().get_content_charset('utf-8')
-  feed = json.loads(data.decode(encoding))
-  #with urllib.request.urlopen(req) as response:
-    #feed = response.read()
-  return feed
-
-def get_stations(feed):
-  nstations=len(feed['features'])
-  station_id = [feed['features'][i]['id'] for i in range(0,nstations)]
-  lat = [feed['stationBeanList'][i]['latitude'] for i in range(0,nstations)]
-  lng = [feed['stationBeanList'][i]['longitude'] for i in range(0,nstations)]
-  ad = [feed['stationBeanList'][i]['availableDocks'] for i in range(0,nstations)]
-  td = [feed['stationBeanList'][i]['totalDocks'] for i in range(0,nstations)]
-
-  return zip(station_id, lat,lng,ad,td)
-"""
 """
 if __name__ == '__main__':
   port = int(os.environ.get('PORT',5000))
