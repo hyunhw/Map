@@ -17,6 +17,7 @@ html,body {
   margin: 0;
 }
 #map{
+  border-radius:8px;
   padding-top:30px;
   height: 500px;
   width: 1200px;
@@ -79,6 +80,7 @@ html,body {
 }
 
 .main-panel-about{
+  border-radius:8px;
   margin-left:100px;
   margin-right:100px;
   margin-top:10px;
