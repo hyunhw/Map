@@ -12,14 +12,14 @@
   font-family: "open-sans"
 }
 html,body {
-  background-color: #c0c0c0;
+  background-color: white;
   height: 100%;
   margin: 0;
 }
 #map{
   padding-top:30px;
   height: 500px;
-  width: 700px;
+  width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -30,7 +30,7 @@ html,body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #375e97;
+  background-color: #E8C166;
 }
 
 /* Float the list items side by side */
@@ -76,4 +76,24 @@ html,body {
 #sr{
   font-size:15px;
   font-weight: normal;
+}
+
+.main-panel-about{
+  margin-left:100px;
+  margin-right:100px;
+  margin-top:10px;
+  padding-left:50px;
+  padding-top:10px;
+  padding-bottom:30px;
+  text-align: left;
+  background-color: #ececec;
+}
+.main-panel-about a:link, a:visited {
+  color: #E8C166;
+}
+
+.icon{
+  max-width: 20px;
+  height:20px;
+  border-radius: 10px;
 }

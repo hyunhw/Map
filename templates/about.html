@@ -15,17 +15,22 @@
     </ul>
 
 
-    <div class = "main-panel">
-      <div class="panel-heading">
+    <div class = "main-panel-about">
+      <div class="panel-heading-about">
         <h3 class = "title">About</h3>
       </div>
-      <div class = "panel-body">
-        This application uses the Indego Bike Share API to retrieve live information on bike share stations in Philadelphia, PA.<br>
-        If you click on the marker, it will show how many bikes are availble, how many docks are available,<br>
-        and (coming soon) whether or not the station will become full/empty over the next hour.<br>
-        This site is powered by flask with a custom designed html/css template and uses the Google Maps Javascript API<br>
-        The backend uses the pandas data analysis library for python.<br>
-        Created by Jennifer Hwang<br>
+      <div class = "panel-body-about">
+        This application uses the <a href="https://www.rideindego.com/stations/json/">Indego Bike Share API</a> to retrieve live information on bike share stations in Philadelphia, PA.<br>
+        If you click on the marker, it will show how many bikes and docks are availble at that station.<br>
+        <br>
+        This application also uses the weather API provided by <a href="https://www.wunderground.com/">Weather Underground</a> to retrieve the current weather information to predict how busy the stations will be today<br>
+        <br>
+        This site is powered by flask with a custom designed html/css template and uses the <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google Maps Javascript API</a><br>
+        The backend uses the pandas data analysis library and the scikit-learn machine learning library for python.<br>
+        <br>
+        Created by Jennifer Hwang
+        <a href="https://github.com/hyunhw"><img src='/static/imgs/githubicon.png' class="icon"></a>
+        <br>
       </div>
     </div>
 
