@@ -18,7 +18,7 @@ html,body {
 }
 #map{
   border-radius:8px;
-  padding-top:30px;
+  padding-top:5px;
   height: 500px;
   width: 1200px;
   margin-left: auto;

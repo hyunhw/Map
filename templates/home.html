@@ -20,7 +20,16 @@
       </div>
       <div class = "panel-body">
         This is an interactive map that shows bike share stops and related information<br>
-        <img src="static/imgs/full.png" height=17px> full, <img src="static/imgs/almostfull.png" height=17px> almost full, <img src="static/imgs/almostempty.png" height=17px> almost empty, <img src="static/imgs/empty.png" height=17px> empty, <img src="static/imgs/unavailable.png" height=17px> unavailable
+        <img src="static/imgs/full.png" height=17px> full, <img src="static/imgs/almostfull.png" height=17px> almost full, <img src="static/imgs/almostempty.png" height=17px> almost empty, <img src="static/imgs/empty.png" height=17px> empty, <img src="static/imgs/unavailable.png" height=17px> unavailable<br>
+        {% if pred == 0 %}
+          <h2> Seems like today's bike demand will be low!</h2>
+          {% elif pred == 1 %}
+          <h2> Seems like today's bike demand will be fair!</h2>
+          {% elif pred == 2 %}
+          <h2> Seems like today's bike demand will be high!</h2>
+        {% else %}
+          <h2> Seems like today's bike demand will be very high!</h2>
+          {% endif %}
       </div>
     </div>
 

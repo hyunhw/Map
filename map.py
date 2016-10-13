@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import os
 from datetime import datetime
+from sklearn.ensemble import RandomForestClassifier
 
 app = Flask(__name__)
 
@@ -14,7 +15,8 @@ def index():
   stations = get_stations(feed)
   startlat=39.9526
   startlng=-75.1652
-  return render_template('home.html', stations=stations)
+  pred = predict_demand()
+  return render_template('home.html', stations=stations, pred=pred)
 
 @app.route('/about')
 def about():
@@ -41,6 +43,40 @@ def get_stations(feed):
   status = [feed['features'][i]['properties']['kioskPublicStatus'] for i in range(0,nstations)]
 
   return zip(station_id, lat,lng,ad,td, status, station_name, ab, station_add)
+
+def predict_demand():
+  weather_rental = pd.read_csv('static/data/weather_rental.csv')
+  predictors = list(weather_rental.columns)
+  print(predictors)
+  predictors.remove('date')
+  predictors.remove('count')
+  predictors.remove('is_busy')
+  predictors.remove('Events')
+
+  train = weather_rental.sample(frac=0.8)
+  test = weather_rental.loc[~weather_rental.index.isin(train.index)]
+
+  reg = RandomForestClassifier(n_estimators=10, max_depth=None, min_samples_leaf=5, max_features='auto')
+  reg.fit(train[predictors], train['is_busy'])
+
+  req = Request('http://api.wunderground.com/api/1e806efcbfa974b3/geolookup/conditions/q/PA/Philadelphia.json')
+  data = urlopen(req).read().decode('utf-8')
+  feed = json.loads(data)
+
+  import re
+  re=re.findall(r'\d+', feed['current_observation']['relative_humidity'])
+  temp=feed['current_observation']['temp_f']
+  wind=feed['current_observation']['wind_mph']
+  dew=feed['current_observation']['dewpoint_f']
+  pressure=feed['current_observation']['pressure_in']
+  visibility=feed['current_observation']['visibility_mi']
+  hum=float(re[0])
+
+  data=[[temp,hum,wind,dew,pressure,visibility]]
+  pred=reg.predict(data)
+
+  return float(pred[0])
+  
 
 """
 if __name__ == '__main__':
