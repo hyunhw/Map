@@ -22,6 +22,10 @@ def index():
 def about():
   return render_template('about.html')
 
+@app.route('/data')
+def history():
+  return render_template('piechart.html')
+
 def get_jsonfeed():
   req = Request('https://www.rideindego.com/stations/json/', headers={'User-Agent': 'Mozilla/5.0'})
   data = urlopen(req).read().decode('utf-8')
