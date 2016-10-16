@@ -22,7 +22,6 @@
       }
       .tooltip{
         background: #eee;
-        box-shadow: 0 0 5px #999999;
         color: #333;
         display: none;
         font-size: 12px;
@@ -72,8 +71,21 @@
 
         //var color = d3.scaleSequential(d3.interpolateGreens);
         //var color = d3.scaleOrdinal(d3.schemeCategory20b);
-        var color = d3.scaleOrdinal(d3.schemeSet3);
+        //var color = d3.scaleOrdinal(d3.schemeSet3);
         //var color = d3.scaleOrdinal().range(['#f7fcf5','#e5f5e0','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#006d2c','#00441b']);
+        var color = d3.scaleOrdinal().range([
+            '#673ab7',
+            '#9c27b0',
+            '#e91e63',
+            '#f44336',
+            '#ff5722',
+            '#ff9800',
+            '#ffc107',
+            '#ffeb3b',
+            '#cddc39',
+            '#8bc34a',
+            '#4caf50',
+            '#009688']);
 
         var svg = d3.select('#chart')
           .append('svg')

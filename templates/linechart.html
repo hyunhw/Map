@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <title>Bike Share</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/static/js/d3.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.2.0.min.js"></script>
+
+  </head>
+  <body>
+    <!-- Navbar -->
+    <ul class="topnav" id="myTopnav">
+      <li><a href="/">Home</a></li>
+      <li><a href="about">About</a></li>
+      <li><a href="data">Data</a></li>
+    </ul>
+    <div id="chart"></div>
+    <script type="text/javascript">
+      var svg = dimple.newSvg("#chart", 590 400);
+      d3.tsv("/static/data/weather_d3_bymonth.tsv", function (data) {
+        data = dimple.filterData(data, "Owner", ["Aperture", "Black Mesa"])
+        var myChart = new dimple.chart(svg, data);
+        myChart.setBounds(60, 30, 505, 305);
+        var x = myChart.addCategoryAxis("x", "Month");
+        x.addOrderRule("Date");
+        myChart.addMeasureAxis("y", "Bike Rental Count");
+        var s = myChart.addSeries("Channel", dimple.plot.line);
+        s.interpolation = "cardinal";
+        myChart.addLegend(60, 10, 500, 20, "right");
+        myChart.draw();
+      });
+    </script>
+
+  </body>
+</html>
