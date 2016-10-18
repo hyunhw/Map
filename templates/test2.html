@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <title>Bike Share</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/static/js/d3.js"></script>
+
+    <style>
+    #chart {
+      height = 400;
+      position: relative;
+      width = 500;
+    }
+    .legend {
+      font-size: 12px;
+    }
+    rect {
+      stroke-width: 2;
+    }
+    .tooltip {
+      background: #eee;
+      color: #333;
+      display: none;
+      font-size: 12px;
+      left: 253px;
+      padding: 10px;
+      position: absolute;
+      text-align: center;
+      top: -225px;
+      width: 80px;
+      z-index:10;
+    }
+    h3 {
+      margin: 0;
+      padding-top: 30px;
+      padding-left: 50px;
+    }
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+    .fig{
+      display: inline;
+    }
+    #tag {
+      font-size:13px;
+      padding-left:50px;
+    }
+    </style>
+
+  </head>
+  <body>
+    <!-- Navbar -->
+    <ul class="topnav" id="myTopnav">
+      <li><a href="/">Home</a><li>
+      <li><a href="about">About</a><li>
+      <li><a href="data">Data</a><li>
+    </ul>
+
+    <h3>Monthly Bike Rentals</h3>
+    <p id='tag'>click pie for temperature info</p>
+    <div id = 'chart' class='fig'></div>
+    <div id = 'graph' class='fig'></div>
+    <script type="text/javascript">
+
+      var color = d3.scaleOrdinal().range([
+        '#673ab7',
+        '#9c27b0',
+        '#e91e63',
+        '#f44336',
+        '#ff5722',
+        '#ff9800',
+        '#ffc107',
+        '#ffeb3b',
+        '#cddc39',
+        '#8bc34a',
+        '#4caf50',
+        '#009688']);
+
+      ///////////
+      // donut //
+      ///////////
+      var widthd = 500;
+      var heightd = 400;
+      var radius = 180;
+      var donutWidth = 75;
+      var legendRectSize=18;
+      var legendSpacing=4;
+     
+
+      var svgd = d3.select('#chart')
+        .append('svg')
+        .attr('width',widthd)
+        .attr('height',heightd)
+        .append('g')
+        .attr('transform','translate(300,200)');
+      var arc = d3.arc()
+        .innerRadius(radius - donutWidth)
+        .outerRadius(radius);
+      var pie = d3.pie()
+        .value(function(d) {return d.count;} )
+        .sort(null);
+      var tooltip = d3.select('#chart')
+        .append('div')
+        .attr('class','tooltip');
+      tooltip.append('div')
+        .attr('class','label');
+      tooltip.append('div')
+        .attr('class','count');
+      tooltip.append('div')
+        .attr('class','percent');
+
+      //reading in data for donut
+      d3.csv('/static/data/weather_d3_bymonth.csv', function(error, dataset){
+          dataset.forEach(function(d){
+            d.count = +d.count;
+          });
+          var path = svgd.selectAll('path')
+            .data(pie(dataset))
+            .enter()
+            .append('path')
+            .attr('d',arc)
+            .attr('fill', function(d){
+              return color(d.data.label);
+            });
+
+          path.on('mouseover', function(d){
+            var total=d3.sum(dataset.map(function(d){
+                return d.count;
+            }));
+            var percent = Math.round(1000*d.data.count/total)/10;
+            tooltip.select('.label').html(d.data.label);
+            tooltip.select('.count').html('total: '+d.data.count);
+            tooltip.select('.percent').html(percent+'%');
+            tooltip.style('display','block');
+          });
+          path.on('mouseout', function(){
+              tooltip.style('display','none');
+          });
+          var legend = svgd.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class','legend')
+            .attr('transform', function(d,i){
+                var height = legendRectSize + legendSpacing;
+                var offset = height*color.domain().length/2;
+                var horz=-14*legendRectSize;
+                var vert=i*height-offset;
+                return 'translate('+horz+','+vert+')';
+             });
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)
+            .style('fill', color)
+            .style('stroke',color);
+          legend.append('text')
+            .attr('x', legendRectSize+legendSpacing)
+            .attr('y', legendRectSize-legendSpacing)
+            .text(function(d) {return d;});
+      }); //end of read pie csv
+
+
+
+      ///////////////
+      // LineGraph //
+      ///////////////
+
+      var margin = {top: 0, right: 20, bottom: 50, left: 70},
+          width = 660 - margin.left - margin.right,
+          height = 400 - margin.top - margin.bottom;
+
+      var x = d3.scaleLinear().range([0, width]);
+      var y = d3.scaleLinear().range([height,0]);
+
+      var svg = d3.select("#graph").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + (margin.left+30) + "," + (margin.top+10) + ")");
+        
+      x.domain([1,31]);
+      y.domain([0,110]);
+     
+      svg.append('g')
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+      svg.append('g')
+        .call(d3.axisLeft(y));
+
+      var line = d3.line()
+        .x(function(d) { return x(d.day); })
+        .y(function(d) { return y(d.temp); });
+        
+      var lineChart = function(csvfile) {
+      d3.csv(csvfile, function(error, data){
+        data.forEach(function(d){
+          d.day= +d.day,
+          d.temp= +d.temp;
+        });
+        
+          
+        svg.append('path')
+          .data([data])
+          .attr('class','line')
+          .attr('d', line);
+          
+      }); //end of read csv
+      };
+      lineChart('/static/data/temp1.csv');
+      lineChart('/static/data/temp2.csv');
+    </script>
+
+  </body>
+</html>
