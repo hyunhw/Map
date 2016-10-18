@@ -61,11 +61,11 @@ def predict_demand():
   predictors.remove('is_busy')
   predictors.remove('Events')
 
-  train = weather_rental.sample(frac=0.8)
-  test = weather_rental.loc[~weather_rental.index.isin(train.index)]
+#  train = weather_rental.sample(frac=0.666)
+#  test = weather_rental.loc[~weather_rental.index.isin(train.index)]
 
   reg = RandomForestClassifier(n_estimators=1800, max_depth=None, min_samples_leaf=5, max_features='auto')
-  reg.fit(train[predictors], train['is_busy'])
+  reg.fit(weather_rental[predictors], weather_rental['is_busy'])
 
   req = Request('http://api.wunderground.com/api/1e806efcbfa974b3/geolookup/conditions/q/PA/Philadelphia.json')
   data = urlopen(req).read().decode('utf-8')
