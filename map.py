@@ -28,7 +28,7 @@ def history():
 
 @app.route('/test')
 def test():
-  return render_template('linechart.html')
+  return render_template('test.html')
 
 def get_jsonfeed():
   req = Request('https://www.rideindego.com/stations/json/', headers={'User-Agent': 'Mozilla/5.0'})
@@ -64,7 +64,7 @@ def predict_demand():
   train = weather_rental.sample(frac=0.8)
   test = weather_rental.loc[~weather_rental.index.isin(train.index)]
 
-  reg = RandomForestClassifier(n_estimators=10, max_depth=None, min_samples_leaf=5, max_features='auto')
+  reg = RandomForestClassifier(n_estimators=1800, max_depth=None, min_samples_leaf=5, max_features='auto')
   reg.fit(train[predictors], train['is_busy'])
 
   req = Request('http://api.wunderground.com/api/1e806efcbfa974b3/geolookup/conditions/q/PA/Philadelphia.json')

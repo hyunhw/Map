@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link type="text/css" rel="stylesheet" href="/static/css/style.css">
+    <title>Bike Share</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="/static/js/d3.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      var color = d3.scaleOrdinal().range([
+        '#673ab7',
+        '#9c27b0',
+        '#e91e63',
+        '#f44336',
+        '#ff5722',
+        '#ff9800',
+        '#ffc107',
+        '#ffeb3b',
+        '#cddc39',
+        '#8bc34a',
+        '#4caf50',
+        '#009688']);
+      var margin = {top: 20, right: 20, bottom: 50, left: 70},
+          width = 960 - margin.left - margin.right,
+          height = 500 - margin.top - margin.bottom;
+
+      var x = d3.scaleLinear().range([0, width]);
+
+      var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
+     x.domain([0,100]);
+     
+     svg.append('g')
+      .call(d3.axisBottom(x));
+
+    </script>
+
+  </body>
+</html>
