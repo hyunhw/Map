@@ -8,6 +8,14 @@
     <meta charset="utf-8">
     <script type="text/javascript" src="/static/js/d3.js"></script>
 
+    <style>
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+    </style>
+
   </head>
   <body>
     <script type="text/javascript">
@@ -30,6 +38,7 @@
           height = 500 - margin.top - margin.bottom;
 
       var x = d3.scaleLinear().range([0, width]);
+      var y = d3.scaleLinear().range([height,0]);
 
       var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -37,11 +46,42 @@
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         
-     x.domain([0,100]);
+      x.domain([1,31]);
+      y.domain([0,110]);
      
-     svg.append('g')
-      .call(d3.axisBottom(x));
+      svg.append('g')
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+      svg.append('g')
+        .call(d3.axisLeft(y));
 
+      var line = d3.line()
+        .x(function(d) { return x(d.day); })
+        .y(function(d) { return y(d.temp); });
+        
+      //var lineChart = function(csvfile) {
+      d3.csv('/static/data/temp1.csv', function(error, data){
+        data.forEach(function(d){
+          d.day= +d.day,
+          d.temp= +d.temp;
+        });
+        
+        //x.domain([1,31]);
+        //y.domain([0,110]);
+     
+        //svg.append('g')
+          //.attr("transform", "translate(0," + height + ")")
+          //.call(d3.axisBottom(x));
+
+        //svg.append('g')
+          //.call(d3.axisLeft(y));
+          
+        svg.append('path')
+          .data([data])
+          .attr('class','line')
+          .attr('d', line);
+          
+      }); //end of read csv
     </script>
 
   </body>
