@@ -56,34 +56,31 @@
         .call(d3.axisLeft(y));
 
       var line = d3.line()
-        .x(function(d) { return x(d.day); })
+        .x(function(d) { return x([1,31]); })
         .y(function(d) { return y(d.temp); });
         
-      var lineChart = function(csvfile) {
-      d3.csv(csvfile, function(error, data){
+      d3.csv('/static/data/temp_d3.csv', function(error, data){
         data.forEach(function(d){
           d.day= +d.day,
           d.temp= +d.temp;
         });
-        
-        //x.domain([1,31]);
-        //y.domain([0,110]);
-     
-        //svg.append('g')
-          //.attr("transform", "translate(0," + height + ")")
-          //.call(d3.axisBottom(x));
 
-        //svg.append('g')
-          //.call(d3.axisLeft(y));
-          
-        svg.append('path')
-          .data([data])
-          .attr('class','line')
-          .attr('d', line);
-          
-      }); //end of read csv
-      };
-      lineChart('/static/data/temp1.csv');
+        //nest the entries by month
+        var dataNest = d3.nest()
+          .key(function(d) {return d.month;}).sortKeys(d3.ascending).sortValues()
+          .entries(data);
+        
+        //loop through each symbol/key
+        dataNest.forEach(function(d){
+          svg.append('path')
+            .data(d.values)
+            .attr('class','line')
+            .style('stroke',function() {
+              return d.color = color(d.key);})
+            .attr('d', line);
+        });//end of for datanest
+        
+      });//end of read csv    
     </script>
 
   </body>
