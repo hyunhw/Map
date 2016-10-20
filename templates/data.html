@@ -38,6 +38,10 @@
       padding-top: 30px;
       padding-left: 50px;
     }
+    .line {
+      fill: none;
+      stroke-width: 1.5px;
+    }
     .fig{
       display: inline;
     }
@@ -90,85 +94,6 @@
           '#4caf50',
           '#009688'])
         .domain(d3.range(1,13));
-
-
-      ///////////////
-      // LineGraph //
-      ///////////////
-
-      var margin = {top: 0, right: 20, bottom: 50, left: 70},
-          width = 660 - margin.left - margin.right,
-          height = 400 - margin.top - margin.bottom;
-
-      var x = d3.scaleLinear().range([0, width]);
-      var y = d3.scaleLinear().range([height,0]);
-
-      var svg = d3.select("#graph").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + (margin.left+10) + "," + (margin.top+10) + ")");
-        
-      x.domain([1,31]);
-      y.domain([0,110]);
-     
-      svg.append('g')
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .append('text')
-        .attr('fill','#000')
-        .attr('x', width)
-        .attr('y', -6)
-        .style('text-anchor', 'end')
-        .style('font-size', '14px')
-        .text('Day of Month');
-      svg.append('g')
-        .call(d3.axisLeft(y))
-        .append('text')
-        .attr('fill','#000')
-        .attr('transform','rotate(-90)')
-        .attr('dy', '1.3em')
-        .style('text-anchor', 'end')
-        .style('font-size', '14px')
-        .text('Temperature (F)');
-
-      var line = d3.line()
-        .x(function(d) { return x(d.day); })
-        .y(function(d) { return y(d.temp); });
-        
-      var lineChart = function(csvfile, index) {
-        d3.csv(csvfile, function(error, data){
-          data.forEach(function(d){
-            d.month = +d.month,
-            d.day= +d.day,
-            d.temp= +d.temp;
-          });
-        
-          svg.append('path')
-            .data([data])
-            .attr('class',function(){ return 'line'+index;})
-            .style('fill', 'none')
-            .style('stroke', function(){ return color2(index);})
-            .style('stroke-width','1.5px')
-            .attr('d', line);
-          
-        }); //end of read csv
-      }; //end of line chart
-
-      lineChart('/static/data/temp1.csv',1);
-      lineChart('/static/data/temp2.csv',2);
-      lineChart('/static/data/temp3.csv',3);
-      lineChart('/static/data/temp4.csv',4);
-      lineChart('/static/data/temp5.csv',5);
-      lineChart('/static/data/temp6.csv',6);
-      lineChart('/static/data/temp7.csv',7);
-      lineChart('/static/data/temp8.csv',8);
-      lineChart('/static/data/temp9.csv',9);
-      lineChart('/static/data/temp10.csv',10);
-      lineChart('/static/data/temp11.csv',11);
-      lineChart('/static/data/temp12.csv',12);
-
-
 
       ///////////
       // donut //
@@ -228,19 +153,8 @@
             tooltip.style('display','block');
           });
           path.on('mouseout', function(){
-            tooltip.style('display','none');
+              tooltip.style('display','none');
           });
-          /*
-          path.on('click', function(){
-            //determine if current line is visible
-            var active = function(d,i){return 'line'+i}.active ? false : true,
-            newOpacity = active ? 0:1;
-            //Hide or show the elements based on the ID
-            d3.select(function(d,i){ return 'line'+i;})
-              .style('opacity',newOpacity);
-            d.active = active;
-          });
-          */
           var legend = svgd.selectAll('.legend')
             .data(color.domain())
             .enter()
@@ -265,6 +179,66 @@
       }); //end of read pie csv
 
 
+
+      ///////////////
+      // LineGraph //
+      ///////////////
+
+      var margin = {top: 0, right: 20, bottom: 50, left: 70},
+          width = 660 - margin.left - margin.right,
+          height = 400 - margin.top - margin.bottom;
+
+      var x = d3.scaleLinear().range([0, width]);
+      var y = d3.scaleLinear().range([height,0]);
+
+      var svg = d3.select("#graph").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + (margin.left+30) + "," + (margin.top+10) + ")");
+        
+      x.domain([1,31]);
+      y.domain([0,110]);
+     
+      svg.append('g')
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+      svg.append('g')
+        .call(d3.axisLeft(y));
+
+      var line = d3.line()
+        .x(function(d) { return x(d.day); })
+        .y(function(d) { return y(d.temp); });
+        
+      var lineChart = function(csvfile, index) {
+        d3.csv(csvfile, function(error, data){
+          data.forEach(function(d){
+            d.month = +d.month,
+            d.day= +d.day,
+            d.temp= +d.temp;
+          });
+        
+          svg.append('path')
+            .data([data])
+            .attr('class','line')
+            .style('stroke', function(){ return color2(index);})
+            .attr('d', line);
+          
+        }); //end of read csv
+      }; //end of line chart
+
+      lineChart('/static/data/temp1.csv',1);
+      lineChart('/static/data/temp2.csv',2);
+      lineChart('/static/data/temp3.csv',3);
+      lineChart('/static/data/temp4.csv',4);
+      lineChart('/static/data/temp5.csv',5);
+      lineChart('/static/data/temp6.csv',6);
+      lineChart('/static/data/temp7.csv',7);
+      lineChart('/static/data/temp8.csv',8);
+      lineChart('/static/data/temp9.csv',9);
+      lineChart('/static/data/temp10.csv',10);
+      lineChart('/static/data/temp11.csv',11);
+      lineChart('/static/data/temp12.csv',12);
     </script>
 
   </body>

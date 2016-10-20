@@ -54,6 +54,13 @@
         .call(d3.axisBottom(x));
       svg.append('g')
         .call(d3.axisLeft(y));
+        .append('text')
+        .attr('fill','#000')
+        .attr('transform','rotate(-90)')
+        .attr('y',6)
+        .attr('dy', '0.71em')
+        .style('text-anchor', 'end')
+        .text('Temperature (F)')
 
       var line = d3.line()
         .x(function(d) { return x(d.day); })

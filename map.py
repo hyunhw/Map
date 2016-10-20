@@ -24,7 +24,7 @@ def about():
 
 @app.route('/data')
 def history():
-  return render_template('test2.html')
+  return render_template('data.html')
 
 @app.route('/test')
 def test():
